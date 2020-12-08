@@ -48,7 +48,6 @@ new_input <- new_input %>%
 
 d2p1_answer <- sum(new_input$is_valid)
 
-
 # Part two ----------------------------------------------------------------
 
 # The tell us in part two that 'min' and 'max' are now the positions in which 
