@@ -29,6 +29,27 @@ sum(str_count(caminho, "X"))
 
 # uma solução mais elegante (e correta) do R-bloggers
 
+input <- readLines("./data/d3_input.txt")
 positions <- (3 * (seq_along(input) - 1)) %% nchar(input) + 1
 sum(substr(input, positions, positions) == '#')
 
+
+# Part two ----------------------------------------------------------------
+
+# new slopes to check
+# Right 1, down 1.
+# Right 3, down 1. (This is the slope you already checked.)
+# Right 5, down 1.
+# Right 7, down 1.
+# Right 1, down 2.
+
+# copiado de r-bloggers
+trees <- function(right, down = 1) {
+  vertical <- seq(0, length(input) - 1, by = down) + 1
+  horizontal <- (right * (seq_along(input) - 1)) %% nchar(input) + 1
+  horizontal <- head(horizontal, length(vertical))
+  as.double(
+    sum(substr(input[vertical], horizontal, horizontal) == '#')
+  )
+}
+trees(1) * trees(3) * trees(5) * trees(7) * trees(1, 2)
