@@ -2,7 +2,11 @@
 title: "rmd_teste"
 author: "Marwin Carmo"
 date: "18/12/2020"
+<<<<<<< HEAD
 output: github_document
+=======
+output: html_document
+>>>>>>> 0918baa62567afeec364186ae3d4ffaf5f76b40b
 ---
 
 ```{r setup, include=FALSE}
