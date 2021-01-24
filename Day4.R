@@ -63,3 +63,30 @@ pass_df %>%
   ) %>% 
   nrow(.)
 # 202
+
+
+# Part two ----------------------------------------------------------------
+
+
+# byr (Birth Year) - four digits; at least 1920 and at most 2002.
+# iyr (Issue Year) - four digits; at least 2010 and at most 2020.
+# eyr (Expiration Year) - four digits; at least 2020 and at most 2030.
+# hgt (Height) - a number followed by either cm or in:
+#   If cm, the number must be at least 150 and at most 193.
+#   If in, the number must be at least 59 and at most 76.
+# hcl (Hair Color) - a # followed by exactly six characters 0-9 or a-f.
+# ecl (Eye Color) - exactly one of: amb blu brn gry grn hzl oth.
+# pid (Passport ID) - a nine-digit number, including leading zeroes.
+# cid (Country ID) - ignored, missing or not.
+# 
+# Your job is to count the passports where all required fields are both present 
+# and valid according to the above rules.
+
+# inspecting the passports dataframe, we can see that all the fields are stored
+# as character. pid, byr, iyr and eyr are numbers, so we need to convert them from character.
+
+pass_df2 <- pass_df %>% 
+  mutate(across(c("pid", "eyr", "iyr", "byr"), parse_number)) %>% 
+# in hgt column we need to separate the height value from the scale label
+  mutate(hgt_scale = str_extract(hgt, "[a-z]+"), .after = hgt) %>% 
+  mutate(hgt = str_extract(hgt, "[0-9]+"))
