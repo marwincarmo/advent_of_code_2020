@@ -83,10 +83,24 @@ pass_df %>%
 # and valid according to the above rules.
 
 # inspecting the passports dataframe, we can see that all the fields are stored
-# as character. pid, byr, iyr and eyr are numbers, so we need to convert them from character.
-
-pass_df2 <- pass_df %>% 
-  mutate(across(c("pid", "eyr", "iyr", "byr"), parse_number)) %>% 
+# as character. byr, iyr and eyr are numbers, so we need to convert them from character.
 # in hgt column we need to separate the height value from the scale label
+# 
+pass_df2 <- pass_df %>% 
+  mutate(across(c("eyr", "iyr", "byr"), parse_number)) %>% 
   mutate(hgt_scale = str_extract(hgt, "[a-z]+"), .after = hgt) %>% 
   mutate(hgt = str_extract(hgt, "[0-9]+"))
+
+# now, for the filtering
+
+pass_df2 %>% 
+  filter(byr %in% 1920:2002,
+         iyr %in% 2010:2020,
+         eyr %in% 2020:2030, 
+         case_when(hgt_scale == "cm" ~ hgt %in% 150:193,
+                   hgt_scale == "in" ~ hgt %in% 59:76),
+         str_detect(hcl, "#......"),
+         str_detect(ecl, ("amb|blu|brn|gry|grn|hzl|oth")),
+         nchar(pid) == 9) %>% 
+  nrow(.)
+# Answer is 137 valid passports
