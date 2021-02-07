@@ -39,3 +39,21 @@ bd_ids <- map_dbl(boardingpass, seatid)
 
 # verifying the maximum value
 max(bd_ids)
+
+pass_num_id <- tibble(boarding_pass = boardingpass,
+                      seat_id = bd_ids)
+
+# Part two ----------------------------------------------------------------
+
+# my seat is not on the list, but the seats with IDs +1 and -1 from it
+# exists on the list.
+# 
+# inspecting the range of values of IDs
+range(bd_ids)
+
+# it goes from 55 to 906
+# to find the missing seat ID, we need to inspect which value from bd_ids
+# is missing from the sequence 55 to 906
+
+seq(55, 906)[which(!55:906 %in% bd_ids)]
+# 519
